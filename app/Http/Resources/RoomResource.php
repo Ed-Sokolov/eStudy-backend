@@ -17,7 +17,8 @@ class RoomResource extends JsonResource
         $author = $this->author;
 
         return [
-            'name'   => $this->id,
+            'id'   => $this->id,
+            'name'   => $this->name,
             'author' => [
                 'id'    => $author->id,
                 'name'  => $author->name,
