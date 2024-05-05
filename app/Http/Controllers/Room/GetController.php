@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Room;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomResource;
 use App\Models\Room;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class GetController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): JsonResource
     {
         $allRooms = Room::all();
 
