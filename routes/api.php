@@ -20,8 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'rooms', 'namespace' => 'Room'], function () {
     Route::get('/', 'GetController');
+    Route::get('/{room}', 'ShowController');
 });
 
 Route::group(['prefix' => 'tasks', 'namespace' => 'Task'], function () {
+    Route::post('/', 'CreateController');
     Route::get('/info', 'InfoController');
 });
