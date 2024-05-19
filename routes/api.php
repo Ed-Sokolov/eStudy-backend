@@ -21,3 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'rooms', 'namespace' => 'Room'], function () {
     Route::get('/', 'GetController');
 });
+
+Route::group(['prefix' => 'tasks', 'namespace' => 'Task'], function () {
+    Route::get('/info', 'InfoController');
+});
