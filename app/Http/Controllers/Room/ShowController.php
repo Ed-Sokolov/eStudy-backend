@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TaskResource;
 use App\Models\Room;
 use App\Models\Task;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Ramsey\Collection\Collection;
 
 class ShowController extends Controller
 {
-    public function __invoke(Room $room)
+    public function __invoke(Room $room): JsonResource
     {
         /**
          * @var Collection<Task> $tasks
