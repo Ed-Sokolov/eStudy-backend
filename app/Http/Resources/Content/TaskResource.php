@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Content;
 
+use App\Http\Resources\AttachmentResource;
+use App\Models\Attachment;
 use App\Models\Room;
 use App\Models\TaskStatus;
 use App\Models\TaskType;
@@ -24,11 +26,13 @@ class TaskResource extends JsonResource
          * @var Room $room
          * @var TaskType $type
          * @var TaskStatus $status
+         * @var Attachment $attachments
          */
         $author = $this->author;
         $room   = $this->room;
         $type   = $this->type;
         $status = $this->status;
+        $attachments = $this->attachments;
 
         return [
             'id' => $this->id,
@@ -53,6 +57,8 @@ class TaskResource extends JsonResource
                 'id' => $status->id,
                 'name' => $status->name,
             ],
+
+            'attachments' => AttachmentResource::collection($attachments),
         ];
     }
 }

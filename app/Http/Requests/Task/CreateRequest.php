@@ -28,6 +28,8 @@ class CreateRequest extends FormRequest
             'author_id' => 'required|integer|exists:users,id',
             'status_id' => 'required|integer|exists:task_statuses,id',
             'type_id' => 'required|integer|exists:task_types,id',
+            'attachments' => 'nullable|array',
+            'attachments.*' => 'nullable|file|mimes:jpeg,jpg,png,svg,webp,doc,docx,pdf,zip,rar,txt,xls,xlsx,ppt,pptx|max:10486',
         ];
     }
 }
