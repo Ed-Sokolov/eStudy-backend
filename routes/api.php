@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'rooms', 'namespace' => 'Room'], function () {
     Route::get('/', 'GetController');
     Route::get('/{room}', 'ShowController');
+    Route::get('/{room}/edit', 'EditController');
+    Route::put('/{room}', 'UpdateController');
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/', 'PostController');
