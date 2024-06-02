@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Rules\KhaiEduEmail;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -50,8 +51,9 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', new KhaiEduEmail()],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'group_id' => ['nullable', 'integer', 'exists:groups,id'],
         ]);
     }
 
@@ -61,12 +63,36 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create(array $data): User
     {
-        return User::create([
+        /**
+         * @var User $user
+        */
+        $user = User::query()->create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        if (!empty($data['group_id'])) {
+            $user->student()->create(
+                [
+                    'group_id' => $data['group_id'],
+                    'user_id' => $user->id
+                ]
+            );
+        }
+
+        if (preg_match('/@student\.csn\.khai\.edu$/', $user->email))
+        {
+            $user->assignRole('student');
+        }
+
+        if (preg_match('/@khai\.edu$/', $user->email))
+        {
+            $user->assignRole('teacher');
+        }
+
+        return $user;
     }
 }

@@ -23,6 +23,10 @@ Route::group(['prefix' => 'rooms', 'namespace' => 'Room'], function () {
     Route::get('/', 'GetController');
     Route::get('/{room}', 'ShowController');
 
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::post('/', 'PostController');
+    });
+
     Route::group(['prefix' => '{room}/tasks', 'namespace' => 'Task'], function () {
         Route::get('/{task}', 'ShowController');
     });
@@ -31,4 +35,12 @@ Route::group(['prefix' => 'rooms', 'namespace' => 'Room'], function () {
 Route::group(['prefix' => 'tasks', 'namespace' => 'Task'], function () {
     Route::post('/', 'CreateController');
     Route::get('/info', 'InfoController');
+});
+
+Route::group(['prefix' => 'groups', 'namespace' => 'Group'], function () {
+    Route::get('/', 'GetController');
+});
+
+Route::group(['prefix' => 'students', 'namespace' => 'Student'], function () {
+    Route::get('/', 'GetController');
 });
