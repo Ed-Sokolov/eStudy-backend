@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Room;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RoomResource;
 use App\Http\Resources\TaskResource;
 use App\Models\Room;
 use App\Models\Task;
@@ -20,7 +21,7 @@ class ShowController extends Controller
 
         return response()->json([
             'tasks' => TaskResource::collection($tasks),
-            'roomName' => $room->name
+            'room' => new RoomResource($room),
         ]);
     }
 }
