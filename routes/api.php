@@ -37,6 +37,12 @@ Route::group(['prefix' => 'rooms', 'namespace' => 'Room'], function () {
 Route::group(['prefix' => 'tasks', 'namespace' => 'Task'], function () {
     Route::post('/', 'CreateController');
     Route::get('/info', 'InfoController');
+    Route::get('/{task}', 'EditController');
+    Route::put('/{task}', 'UpdateController');
+});
+
+Route::group(['prefix' => 'attachments', 'namespace' => 'Attachment'], function () {
+    Route::delete('/{attachment}', 'RemoveController');
 });
 
 Route::group(['prefix' => 'groups', 'namespace' => 'Group'], function () {

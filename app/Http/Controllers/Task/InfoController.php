@@ -9,8 +9,10 @@ use App\Http\Resources\Info\Task\TypeResource;
 use App\Models\Room;
 use App\Models\TaskStatus;
 use App\Models\TaskType;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InfoController extends Controller
 {
@@ -18,7 +20,19 @@ class InfoController extends Controller
     {
         $statuses   = TaskStatus::all();
         $types      = TaskType::all();
-        $rooms      = Room::all();
+
+        /**
+         * @var User $user
+         */
+        $user = Auth::user();
+
+        $rooms = match ($user->getRoleNames()[0] ?? '') {
+            'administrator' => Room::all(),
+            'teacher' => Room::query()
+                ->where('user_id', $user->id)
+                ->get(),
+            default => $user->rooms,
+        };
 
         return response()->json([
             'statuses'  => StatusResource::collection($statuses),
