@@ -24,6 +24,7 @@ Route::group(['prefix' => 'rooms', 'namespace' => 'Room'], function () {
     Route::get('/{room}', 'ShowController');
     Route::get('/{room}/edit', 'EditController');
     Route::put('/{room}', 'UpdateController');
+    Route::delete('/{room}', 'RemoveController');
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/', 'PostController');
@@ -39,6 +40,7 @@ Route::group(['prefix' => 'tasks', 'namespace' => 'Task'], function () {
     Route::get('/info', 'InfoController');
     Route::get('/{task}', 'EditController');
     Route::put('/{task}', 'UpdateController');
+    Route::delete('/{task}', 'RemoveController');
 });
 
 Route::group(['prefix' => 'attachments', 'namespace' => 'Attachment'], function () {
