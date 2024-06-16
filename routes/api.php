@@ -43,6 +43,11 @@ Route::group(['prefix' => 'tasks', 'namespace' => 'Task'], function () {
     Route::delete('/{task}', 'RemoveController');
 });
 
+Route::group(['prefix' => 'comments', 'namespace' => 'Comment'], function () {
+    Route::post('/', 'PostController');
+    Route::delete('/{comment}', 'RemoveController');
+});
+
 Route::group(['prefix' => 'attachments', 'namespace' => 'Attachment'], function () {
     Route::delete('/{attachment}', 'RemoveController');
 });

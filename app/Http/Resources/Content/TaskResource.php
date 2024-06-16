@@ -3,7 +3,9 @@
 namespace App\Http\Resources\Content;
 
 use App\Http\Resources\AttachmentResource;
+use App\Http\Resources\CommentResource;
 use App\Models\Attachment;
+use App\Models\Comment;
 use App\Models\Room;
 use App\Models\TaskStatus;
 use App\Models\TaskType;
@@ -27,12 +29,14 @@ class TaskResource extends JsonResource
          * @var TaskType $type
          * @var TaskStatus $status
          * @var Attachment $attachments
+         * @var Comment $comments
          */
-        $author = $this->author;
-        $room   = $this->room;
-        $type   = $this->type;
-        $status = $this->status;
-        $attachments = $this->attachments;
+        $author         = $this->author;
+        $room           = $this->room;
+        $type           = $this->type;
+        $status         = $this->status;
+        $attachments    = $this->attachments;
+        $comments       = $this->comments;
 
         return [
             'id' => $this->id,
@@ -59,6 +63,7 @@ class TaskResource extends JsonResource
             ],
 
             'attachments' => AttachmentResource::collection($attachments),
+            'comments' => CommentResource::collection($comments),
         ];
     }
 }
